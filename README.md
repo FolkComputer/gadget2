@@ -1,6 +1,6 @@
 # gadget2
 
-still very WIP.
+still very WIP; instructions may be inaccurate.
 
 ## Bill of materials
 
@@ -13,9 +13,10 @@ still very WIP.
   - 3x 18650 lithium batteries
 - [KW12-3 micro limit switch](https://www.amazon.com/dp/B07X142VGC) (trigger button)
   - 1k ohm resistor
-  - trrs cable
-  - trrs socket
-  - 2 male (to solder) to female jumper cables
+  - trrs cable for grip trigger button
+  - trrs socket to plug in trigger button
+  - trrs cable for speaker
+  - jumper cables
 
 ### Tools
 
