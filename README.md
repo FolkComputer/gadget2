@@ -1,16 +1,17 @@
 # gadget2
 
+still very WIP.
+
 ## Bill of materials
 
-- case
-- orange pi 5
-  - sd card
-  - wifi m2
-- ultimems anybeam
-- ELP stereo USB camera
-- Waveshare UPS 3S module
-  - 3x lithium batteries
-- moment switch
+- Orange Pi 5
+  - microSD card
+  - [AP6275P PCIe Wi-Fi module](https://www.amazon.com/Orange-Pi-Support-Compatible-Computers/dp/B0BZRNM6HR)
+- [AnyBeam mini laser projector](https://www.amazon.com/AnyBeam-Focus-free-Projection-Consumption-DisplayPort/dp/B0CZ69Q2Q4/)
+- [ELP 3DGS1200P01 V83 stereo USB camera](https://www.amazon.com/dp/B0DQ4R9S6W)
+- [Waveshare UPS 3S module](https://www.amazon.com/waveshare-Uninterruptible-UPS-Module-3S/dp/B0BQC2WNR8)
+  - 3x 18650 lithium batteries
+- [KW12-3 micro limit switch](https://www.amazon.com/dp/B07X142VGC) (trigger button)
   - 1k ohm resistor
   - trrs cable
   - trrs socket
@@ -22,11 +23,13 @@
 
 ## Construction
 
+1. Install Wi-Fi card in Orange Pi 5
+
 1. Solder jumper cables to the 3.5mm socket
 
 1. Use a soldering iron to sink the threaded inserts (1x 1/4in for
-   bottom tripod, 3x M2.5 4mm for front panel, 4x M2.5 4mm for back
-   panel) into the chassis
+   bottom tripod, 4x M2.5 2.5mm for front panel, 4x M2.5 2.5mm for back
+   panel) into the chassis / front panel
 
 1. Glue neoprene rubber to the inside of the chassis to keep the
    projector stable
@@ -53,15 +56,6 @@ install vulkan https://github.com/Bleach665/Mali610Vulkan
 
 ### Wi-Fi
 
-Orange Pi 5 requires a dongle for Wi-Fi (and Bluetooth).
-
-Edimax: install Rtl driver https://github.com/lwfinger/rtl8723bu
-disable concurrent mode (it doesn't work anyway)
-
-disable sleep mode: https://old.reddit.com/r/linuxquestions/comments/6aixxu/edimax_ew7611ulb_lsmod_8723bu_wifi_keeps/
-
-make sure you're connecting to a 2.4GHz network.
-
 sudo apt install network-manager
 
 /etc/netplan/50-cloud-init.yaml
@@ -80,7 +74,7 @@ network:
       optional: true
       dhcp4: true
   wifis:
-    wlx08beac2e0722:
+    wlan0:
       dhcp4: true
       access-points:
         YOUR-WIFI-SSID:
