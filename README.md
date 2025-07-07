@@ -2,6 +2,10 @@
 
 still very WIP; instructions may be inaccurate.
 
+![](doc/gadget.png)
+
+![](doc/grip.png)
+
 ## Bill of materials
 
 - Orange Pi 5
