@@ -90,22 +90,19 @@ network:
 
 `sudo adduser folk i2c` for battery check
 
-set up folk
+compile wiringOP in ~/wiringOP
 
-```
-folk@gadget-orange:~$ sudo gpio mode 16 up
-folk@gadget-orange:~$ sudo gpio read 16
-1
-folk@gadget-orange:~$ sudo gpio read 16
-0
-folk@gadget-orange:~$ sudo gpio read 16
-```
+HACK for /dev/mem access:
+
+    $ sudo setcap cap_sys_rawio+ep `which tclsh8.6`
 
 
 setup.folk:
 
 ```
-Assert $this wishes $::thisNode uses camera "/dev/video0" with width 3200 height 1200
+Assert $this wishes $::thisNode uses camera "/dev/video0" with \
+    width 3200 height 1200 \
+    crop {x 500 y 0 width 1000 height 800}
 
 Assert $this wishes $::thisNode uses display 0
 
@@ -123,17 +120,45 @@ fileevent $fd readable [list apply {{fd} {
     }
 }} $fd]
 
-exec gpio mode 16 up
-
 When display /disp/ has width /w/ height /h/ {
-    When the clock time is /t/ {
-        set pressed [expr {![exec gpio read 16]}]
-        set color [expr {$pressed ? "green" : "white"}]
-        Wish to draw a dashed stroke with points [list [list 0 0] [list $w 0] [list $w $h] [list 0 $h] [list 0 0]] color $color width 10 dashlength 40 dashoffset [expr {fmod($t, 10)*-120}]
+    When the button is /state/ {
+        When the clock time is /t/ {
+            set color [expr {$state eq "pressed" ? "green" : "white"}]
+            Wish to draw a dashed stroke with points \
+                [list [list 0 0] \
+                     [list $w 0] \
+                     [list $w $h] \
+                     [list 0 $h] \
+                     [list 0 0]] \
+                color $color width 10 dashlength 40 dashoffset [expr {fmod($t, 10)*-120}]
+        }
     }
 }
-
 When the battery percentage is /percent/ {
     Wish to draw text with text "$percent%" x 40 y 40
+}
+
+set cc [c create]
+$cc include <wiringPi.h>
+$cc proc gpioInit {} void {
+    // gpio mode 16 up
+    FOLK_ENSURE(wiringPiSetup() != -1);
+    pinMode(16, INPUT);
+    pullUpDnControl(16, PUD_UP);
+}
+$cc proc gpioRead {} int {
+    // gpio read 16
+    return digitalRead(16);
+}
+
+c loadlib /home/folk/wiringOP/wiringPi/libwiringPi.so.2.58
+$cc compile
+exec sudo chmod 666 /dev/mem
+
+gpioInit
+When the clock time is /t/ {
+    set pressed [expr {![gpioRead]}]
+    Hold button \
+        {Claim the button is [expr {$pressed ? "pressed" : "unpressed"}]}
 }
 ```
