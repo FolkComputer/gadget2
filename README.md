@@ -17,10 +17,19 @@ still very WIP; instructions may be inaccurate.
   - 3x 18650 lithium batteries
 - [KW12-3 micro limit switch](https://www.amazon.com/dp/B07X142VGC) (trigger button)
   - 1k ohm resistor
-  - trrs cable for grip trigger button
-  - trrs socket to plug in trigger button
-  - trrs cable for speaker
+  - [trrs cable for grip trigger button](https://www.amazon.com/dp/B085435S6G)
+  - [trrs cable for speaker](https://www.amazon.com/dp/B085435S6G)
+  - [trrs socket to plug in trigger button](https://www.amazon.com/dp/B089222S84)
   - jumper cables
+- [M2.5 female-female standoffs](https://www.amazon.com/dp/B0BP6LT76V): 3x 35mm for Pi (you
+  can combine 15mm + 20mm from that kit for these), 4x 6mm for battery
+- [1/4in x 1/2in bolt and washers](https://www.amazon.com/dp/B09BLSRZ78) to hold
+  projector in
+  - [1/4in x 6mm (short) threaded heat set insert](https://www.amazon.com/dp/B094H2269W)
+- [M2.5 threaded heat set inserts](https://www.amazon.com/dp/B0D8SV8RS3)
+- M2 or M2.5 bolt to secure block into trigger grip
+- [M2 bolts](https://www.amazon.com/dp/B0BXT4FG1T) to mount camera
+
 
 ### Tools
 
@@ -39,7 +48,10 @@ still very WIP; instructions may be inaccurate.
 1. Glue neoprene rubber to the inside of the chassis to keep the
    projector stable
 
-1. Attach standoffs to the Pi and battery
+1. Attach standoffs to the Pi and battery.
+   - Battery should be oriented with jumper pins (not the ports you plug into, the exposed pins) in
+   *front* (same side as projector lens, camera). See image at top of page
+   - Pi should be oriented with microSD in front
 
 1. Plug GPIO pins
 
@@ -48,6 +60,12 @@ still very WIP; instructions may be inaccurate.
 
 1. Put the battery and Pi into the chassis. Bolt the battery and Pi
    standoffs in
+
+1. Screw the camera into the chassis (screws go directly into the plastic)
+
+1. Put the projector into the chassis, bolt it in with 1/4 in bolt
+   with washers both inside and outside the chassis to keep it from
+   warping
 
 ## Software setup
 
