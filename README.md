@@ -29,6 +29,9 @@ still very WIP; instructions may be inaccurate.
 - [M2.5 threaded heat set inserts](https://www.amazon.com/dp/B0D8SV8RS3)
 - M2 or M2.5 bolt to secure block into trigger grip
 - [M2 bolts](https://www.amazon.com/dp/B0BXT4FG1T) to mount camera
+- 2x [USB-C 240W 40Gbps 180 degree
+  adapter](https://www.amazon.com/dp/B0BWDR7JMV) for USB-C power and
+  USB-C video out on Pi 5
 
 
 ### Tools
