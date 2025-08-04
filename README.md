@@ -42,6 +42,8 @@ still very WIP; instructions may be inaccurate.
 
 ## Construction
 
+![](doc/assembling.jpeg)
+
 1. Install Wi-Fi card in Orange Pi 5
 
 1. Solder jumper cables to the 3.5mm socket
@@ -58,7 +60,8 @@ still very WIP; instructions may be inaccurate.
    *front* (same side as projector lens, camera). See image at top of page
    - Pi should be oriented with microSD in front
 
-1. Plug GPIO pins
+1. Connect GPIO pins on Pi to battery pins
+   - <img src="doc/battery-jumpers.jpeg" width="200"> <img src="doc/battery-jumpers-pi.jpeg" width="200">
 
 1. Remove the charger and power button cables from the battery and take off the rings. Attach
    the charger and power buttons to the back panel
@@ -71,6 +74,10 @@ still very WIP; instructions may be inaccurate.
 1. Put the projector into the chassis, bolt it in with 1/4 in bolt
    with washers both inside and outside the chassis to keep it from
    warping
+
+### Grip construction
+
+![](doc/grip-wiring.jpeg)
 
 ## Software setup
 
