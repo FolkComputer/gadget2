@@ -32,6 +32,8 @@ still very WIP; instructions may be inaccurate.
 - 2x [USB-C 240W 40Gbps 180 degree
   adapter](https://www.amazon.com/dp/B0BWDR7JMV) for USB-C power and
   USB-C video out on Pi 5
+- [USB C Short Cable USB4 40Gbps
+  UP-angled](https://www.amazon.com/dp/B0CM3MWY98) for projector
 
 
 ### Tools
