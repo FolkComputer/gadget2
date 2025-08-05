@@ -77,7 +77,7 @@ still very WIP; instructions may be inaccurate.
 
 ### Grip construction
 
-![](doc/grip-wiring.jpeg)
+<img src="doc/grip-wiring.jpeg" width="400">
 
 ## Software setup
 
