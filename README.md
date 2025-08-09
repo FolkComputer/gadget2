@@ -77,17 +77,33 @@ still very WIP; instructions may be inaccurate.
 
 ### Grip construction
 
+Print [the dial and internal block from the original grip
+files](https://www.thingiverse.com/thing:1966894), and the grip file
+from this repo which has a cutout for trigger button.
+
 <img src="doc/grip-wiring.jpeg" width="400">
 
 ## Software setup
+
+Use [Joshua Riek
+Ubuntu](https://joshua-riek.github.io/ubuntu-rockchip-download/boards/orangepi-5.html).
 
 ```
 $ sudo systemctl enable ssh && sudo systemctl start ssh
 ```
 
+`sudo adduser folk i2c` for battery check
+
+[Set up device tree overlays](https://github.com/Joshua-Riek/ubuntu-rockchip/wiki/Ubuntu-24.04-LTS#using-a-device-tree-overlay) -- at end of /etc/default/u-boot, for I2C
+and Wi-Fi card:
+
+```
+U_BOOT_FDT_OVERLAYS="device-tree/rockchip/overlay/orangepi-5-ap6275p.dtbo device-tree/rockchip/overlay/rk3588-i2c5-m3.dtbo"
+```
+
 ### Graphics
 
-install vulkan https://github.com/Bleach665/Mali610Vulkan
+Install Vulkan: https://github.com/Bleach665/Mali610Vulkan
 
 ### Wi-Fi
 
@@ -117,8 +133,6 @@ network:
 ```
 
 ### Folk
-
-`sudo adduser folk i2c` for battery check
 
 compile wiringOP in ~/wiringOP
 
