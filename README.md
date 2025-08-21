@@ -34,6 +34,8 @@ still very WIP; instructions may be inaccurate.
   USB-C video out on Pi 5
 - [USB C Short Cable USB4 40Gbps
   UP-angled](https://www.amazon.com/dp/B0CM3MWY98) for projector
+- [90-degree USB-C to USB-A up-angled
+  cable](https://www.amazon.com/dp/B0BVYLDWMP) for camera
 
 
 ### Tools
@@ -74,6 +76,8 @@ still very WIP; instructions may be inaccurate.
 1. Put the projector into the chassis, bolt it in with 1/4 in bolt
    with washers both inside and outside the chassis to keep it from
    warping
+
+![](doc/back.jpeg)
 
 ### Grip construction
 
