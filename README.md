@@ -145,7 +145,7 @@ HACK for /dev/mem access:
     $ sudo setcap cap_sys_rawio+ep `which tclsh8.6`
 
 
-setup.folk:
+setup.folk for folk1 (**for folk2, use this repo's setup.folk**):
 
 ```
 Assert $this wishes $::thisNode uses camera "/dev/video0" with \

@@ -1,0 +1,73 @@
+# Copy this file to ~/folk-live/setup.folk and edit it to make
+# changes.
+
+# We're on folk2.
+
+exec v4l2-ctl --set-ctrl auto_exposure=1
+exec v4l2-ctl --set-ctrl exposure_time_absolute=1500
+
+When {
+    set fd [open |[list python3 "/home/folk/UPS_Module_3S_Code/RaspberryPi/UPS Module 3S/INA219.py"] r]
+    fconfigure $fd -buffering line
+    while {[gets $fd line] >= 0} {
+        if {[eof $fd]} {
+            close $fd
+        }
+
+        if {[regexp {Percent:\s*([0-9\.]+)%} $line -> percent]} {
+            Hold! -key battery \
+                Claim the battery percentage is $percent
+        }
+    }
+}
+
+When display /disp/ has width /w/ height /h/ {
+    When the button is /state/ {
+        When the clock time is /t/ {
+            set color [expr {$state eq "pressed" ? "green" : "white"}]
+            Wish to draw a dashed line onto $disp with points \
+                [list [list 0 0] \
+                     [list $w 0] \
+                     [list $w $h] \
+                     [list 0 $h] \
+                     [list 0 0]] \
+                color $color width 10 dashlength 40 dashoffset [expr {fmod($t, 10)*-120}]
+        }
+    }
+
+    When the battery percentage is /percent/ {
+        Wish to draw text onto $disp with text "$percent%" \
+            x 40 y 40 scale 40 anchor topleft
+    }
+}
+
+set cc [C]
+$cc include <wiringPi.h>
+$cc proc gpioInit {} void {
+    // gpio mode 16 up
+    FOLK_ENSURE(wiringPiSetup() != -1);
+    pinMode(16, INPUT);
+    pullUpDnControl(16, PUD_UP);
+}
+$cc proc gpioRead {} int {
+    // gpio read 16
+    return digitalRead(16);
+}
+
+$cc endcflags -L/home/folk/wiringOP/wiringPi -lwiringPi
+set gpioLib [$cc compile]
+exec sudo chmod 666 /dev/mem
+
+$gpioLib gpioInit
+When the clock time is /t/ {
+    set pressed [expr {![$gpioLib gpioRead]}]
+    Hold! -key button \
+        Claim the button is [expr {$pressed ? "pressed" : "unpressed"}]
+}
+
+
+Assert! $this wishes $::thisNode uses camera "/dev/video0" with \
+    width 3200 height 1200 \
+    crop {x 500 y 0 width 1000 height 800}
+
+Assert! $this wishes $::thisNode uses display 0
