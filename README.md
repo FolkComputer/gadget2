@@ -145,6 +145,10 @@ HACK for /dev/mem access:
     $ sudo setcap cap_sys_rawio+ep `which tclsh8.6`
 
 
+For battery report: [Download "Sample demo" from Waveshare
+wiki.](https://www.waveshare.com/wiki/UPS_Module_3S#Resources) Set
+`i2c_bus=5` in `/home/folk/UPS_Module_3S_Code/RaspberryPi/UPS Module 3S/INA219.py` INA219 constructor.
+
 setup.folk for folk1 (**for folk2, use this repo's setup.folk**):
 
 ```
