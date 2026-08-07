@@ -1,0 +1,93 @@
+name: Build Folk Arch ISO
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'claude/**'
+    paths:
+      - 'iso/**'
+      - '.github/workflows/build-folk-iso.yml'
+
+jobs:
+  build:
+    name: Build ISO (mkarchiso)
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:base-devel
+      options: --privileged
+    steps:
+      - name: Install build tools
+        run: pacman -Syu --noconfirm archiso git
+
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Build ISO
+        run: bash iso/build.sh
+
+      - name: Checksums
+        run: |
+          cd iso/out
+          sha256sum ./*.iso | tee SHA256SUMS
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: folk-archlinux-iso
+          path: |
+            iso/out/*.iso
+            iso/out/SHA256SUMS
+          compression-level: 0
+          if-no-files-found: error
+
+  boot-test:
+    name: Boot test (QEMU)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download ISO artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: folk-archlinux-iso
+
+      - name: Install QEMU
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends qemu-system-x86
+
+      - name: Boot ISO and wait for login prompt on serial console
+        run: |
+          iso=$(ls ./*.iso | head -n1)
+          echo "Booting $iso"
+          qemu-system-x86_64 \
+            -machine q35,accel=kvm:tcg -cpu max -smp 2 -m 3072 \
+            -display none -serial file:serial.log \
+            -cdrom "$iso" -boot d -no-reboot &
+          qpid=$!
+          for i in $(seq 1 90); do
+            sleep 10
+            if grep -aq "login:" serial.log; then
+              echo "ISO booted to a login prompt."
+              kill "$qpid" || true
+              exit 0
+            fi
+            if ! kill -0 "$qpid" 2>/dev/null; then
+              echo "QEMU exited early:"
+              tail -n 100 serial.log || true
+              exit 1
+            fi
+          done
+          echo "Timed out waiting for login prompt:"
+          tail -n 200 serial.log || true
+          kill "$qpid" || true
+          exit 1
+
+      - name: Upload serial log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-test-serial-log
+          path: serial.log
+          if-no-files-found: ignore

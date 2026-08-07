@@ -1,0 +1,15 @@
+
+  Folk tabletop live environment (Arch Linux)
+  ===========================================
+
+  Folk starts automatically as a systemd service:
+      systemctl status folk        # logs: journalctl -u folk -f
+      user: folk  password: folk   # folk has passwordless sudo
+
+  Web UI:   http://localhost:4273  (or http://folk-live.local:4273)
+  Source:   /home/folk/folk        (vendored deps prebuilt)
+
+  Install onto this machine (e.g. to dual-boot):
+      1. run `archinstall` and complete a normal install
+      2. folk-install-to-disk /mnt/archinstall
+

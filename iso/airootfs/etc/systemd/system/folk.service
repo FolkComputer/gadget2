@@ -1,0 +1,19 @@
+# Folk service, per https://github.com/FolkComputer/folk#manual-linux-tabletop-installation
+# ExecStart goes through folk-start, which finishes `make deps` first if the
+# prebuild was skipped, then runs `make start`.
+[Unit]
+Description=Folk service
+After=network.target folk-init.service
+Requires=folk-init.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=folk
+WorkingDirectory=/home/folk/folk
+ExecStart=/usr/local/bin/folk-start
+
+[Install]
+WantedBy=multi-user.target

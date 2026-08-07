@@ -1,0 +1,42 @@
+# Folk tabletop dependencies, mapped from the apt package list in
+# https://github.com/FolkComputer/folk#manual-linux-tabletop-installation
+# (Ubuntu name in the comment where it differs from the Arch name.)
+rsync
+git
+cmake
+libjpeg-turbo            # libturbojpeg0-dev
+libpng                   # libpng-dev
+libdrm                   # libdrm-dev
+pkgconf                  # pkg-config
+v4l-utils
+vulkan-tools
+vulkan-icd-loader        # libvulkan1
+vulkan-headers           # libvulkan-dev
+vulkan-validation-layers # vulkan-validationlayers
+meson
+mesa                     # libgbm-dev (GBM lives in mesa on Arch)
+shaderc                  # glslc
+ghostscript
+kbd                      # kbd + console-data (keymaps ship with kbd on Arch)
+psmisc
+zlib                     # zlib1g-dev
+openssl                  # libssl-dev
+automake
+libtool
+autoconf
+autoconf-archive
+make
+gcc
+
+# GPU Vulkan drivers (Ubuntu's mesa-vulkan-drivers, split up on Arch).
+# vulkan-swrast (lavapipe) gives a CPU Vulkan device, which is what lets
+# Folk run inside QEMU with no GPU passthrough.
+vulkan-intel
+vulkan-radeon
+vulkan-nouveau
+vulkan-swrast
+
+# Quality of life for the live tabletop environment: mDNS so the Folk web
+# UI is reachable at http://folk-live.local:4273 from another machine.
+avahi
+nss-mdns

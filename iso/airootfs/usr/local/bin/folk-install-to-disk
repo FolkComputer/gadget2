@@ -1,0 +1,29 @@
+#!/bin/bash
+# Copy this live environment's Folk setup into a freshly installed system
+# (e.g. after `archinstall`, whose target is mounted at /mnt/archinstall).
+#
+# usage: folk-install-to-disk <mounted-target-root>
+set -eu
+
+target="${1:?usage: folk-install-to-disk <mounted-target-root>}"
+[ -d "$target" ] || { echo "error: $target is not a directory" >&2; exit 1; }
+
+for f in /etc/systemd/system/folk.service \
+         /etc/systemd/system/folk-init.service \
+         /etc/udev/rules.d/99-input.rules \
+         /etc/sudoers.d/folk \
+         /usr/local/bin/folk-init \
+         /usr/local/bin/folk-start \
+         /opt/folk.tar.gz \
+         /opt/folk-packages.txt; do
+    install -D -m "$(stat -c %a "$f")" "$f" "${target}${f}"
+done
+
+mkdir -p "${target}/etc/systemd/system/multi-user.target.wants"
+ln -sf ../folk.service "${target}/etc/systemd/system/multi-user.target.wants/folk.service"
+ln -sf ../folk-init.service "${target}/etc/systemd/system/multi-user.target.wants/folk-init.service"
+
+echo "Installing Folk's package dependencies into ${target}..."
+arch-chroot "$target" pacman -S --needed --noconfirm - < /opt/folk-packages.txt
+
+echo "Done. Folk will start automatically on the installed system's first boot."

@@ -1,0 +1,5 @@
+# Live environment: Folk's Makefile shells out to sudo (systemctl, setcap,
+# pkill), so give the folk user passwordless sudo here. On an installed
+# system the Folk README only asks for:
+#   folk ALL=(ALL) NOPASSWD: /usr/bin/systemctl
+folk ALL=(ALL) NOPASSWD: ALL

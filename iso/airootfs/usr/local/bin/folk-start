@@ -1,0 +1,10 @@
+#!/bin/bash
+# folk.service entry point: make sure vendored deps are built, then hand
+# off to Folk's own `make start` (under systemd it execs ./folk directly).
+set -eu
+cd /home/folk/folk
+if [ ! -f .folk-deps-prebuilt ]; then
+    make deps
+    touch .folk-deps-prebuilt
+fi
+exec make start

@@ -1,0 +1,22 @@
+#!/bin/bash
+# One-shot live-boot setup: create the folk user (groups per the Folk
+# README, filtered to those that exist on Arch) and unpack the Folk
+# checkout that build.sh baked into the image.
+set -eu
+
+if ! id folk &>/dev/null; then
+    useradd -m -s /bin/bash folk
+    echo folk:folk | chpasswd
+fi
+
+for group in adm uucp optical wheel audio video games users input tty render lp storage kvm; do
+    getent group "$group" >/dev/null && usermod -a -G "$group" folk
+done
+
+if [ ! -d /home/folk/folk ]; then
+    tar -xzf /opt/folk.tar.gz -C /home/folk
+    chown -R folk:folk /home/folk/folk
+fi
+
+mkdir -p /home/folk/folk-live
+chown folk:folk /home/folk/folk-live

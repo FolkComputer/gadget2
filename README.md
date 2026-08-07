@@ -87,6 +87,19 @@ from this repo which has a cutout for trigger button.
 
 <img src="doc/grip-wiring.jpeg" width="400">
 
+## Try Folk on a laptop or in QEMU (Arch Linux live ISO)
+
+[`iso/`](iso/) builds a bootable x86_64 Arch Linux live ISO with the whole
+[Folk tabletop
+installation](https://github.com/FolkComputer/folk#manual-linux-tabletop-installation)
+preloaded — dependencies, source, and the `folk` service. It boots in
+QEMU/UTM/VirtualBox, writes to a USB stick, and doubles as an installer
+for dual-booting. CI builds it on every change: see the "Build Folk Arch
+ISO" workflow's artifacts, and [`iso/README.md`](iso/README.md) for usage.
+
+Note: the ISO is for PCs/VMs. The gadget hardware below (Orange Pi 5)
+does not boot ISOs and still uses the setup in the next section.
+
 ## Software setup
 
 Use [Joshua Riek

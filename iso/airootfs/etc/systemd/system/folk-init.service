@@ -1,0 +1,11 @@
+[Unit]
+Description=Set up the folk user and Folk checkout (live environment)
+ConditionPathExists=/opt/folk.tar.gz
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/folk-init
+
+[Install]
+WantedBy=multi-user.target
