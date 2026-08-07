@@ -39,6 +39,7 @@ cp -rT "${ISO_DIR}/airootfs" "${PROFILE_DIR}/airootfs"
 cat "${ISO_DIR}/profiledef.append.sh" >> "${PROFILE_DIR}/profiledef.sh"
 
 # The installed-system helper needs the package list at runtime.
+mkdir -p "${PROFILE_DIR}/airootfs/opt"
 printf '%s\n' "${extra_pkgs[@]}" > "${PROFILE_DIR}/airootfs/opt/folk-packages.txt"
 
 # Mirror the kernel/systemd console onto a serial port so headless QEMU runs
